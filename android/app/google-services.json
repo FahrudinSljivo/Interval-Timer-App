@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "731519584127",
+    "firebase_url": "https://interval-timer-app.firebaseio.com",
+    "project_id": "interval-timer-app",
+    "storage_bucket": "interval-timer-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731519584127:android:d9c412b5f0b9eee5b8fc4a",
+        "android_client_info": {
+          "package_name": "com.example.interval_timer_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731519584127-4stoi0o9kb5rbl1ak96l17m5livn2sac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGTtg6NCmW9lfzNwKii4182CF7uAs4yqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731519584127-4stoi0o9kb5rbl1ak96l17m5livn2sac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
