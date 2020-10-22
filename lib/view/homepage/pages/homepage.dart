@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:interval_timer_app/models/trainingSessionModel.dart';
+import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
 import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/globals.dart';
+import 'package:interval_timer_app/utils/loader.dart';
 import 'package:interval_timer_app/view/addTrainingSession/pages/addTrainingSession.dart';
 import 'package:interval_timer_app/view/authentication/login/login.dart';
 import 'package:interval_timer_app/view/homepage/widgets/trainingSessionTile.dart';
 import 'package:interval_timer_app/view/sharedWidgets/deleteAlertDialog.dart';
 import 'package:interval_timer_app/viewModel/auth/auth.dart';
+import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,8 +30,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SharedPreferences.getInstance().then((value) {
+      print("DIREKT IZ SERD PREFERENSESA");
+      print(value.getString("id"));
+    });
     print("CURRENTLY SIGNED USER");
     print(currentlySignedUser);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Your training sessions'),
@@ -49,18 +59,28 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: primaryTheme,
-        child: Center(
-          child:
-              /*Text(
-            "You have no training sessions yet. \nTry adding some!",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
-          ),*/
-              //TrainingSessionTile(t),
-              DeleteAlertDialog(),
-        ),
+        child: FutureBuilder(
+            future:
+                TrainingSession().fetchTrainingSessions(currentlySignedUser),
+            builder: (context, snapshot) {
+              //(snapshot.data);
+              Provider.of<TrainingSessionsProvider>(context, listen: false)
+                  .fetchAndSetTrainingSessions(snapshot.data);
+              var trainingSessionsList =
+                  Provider.of<TrainingSessionsProvider>(context, listen: false)
+                      .trainingSessions;
+              var listLength = trainingSessionsList.length;
+              if (snapshot.hasData) {
+                return trainingSessionsList == null
+                    ? Container()
+                    : ListView(
+                        children: trainingSessionsList
+                            .map((e) => TrainingSessionTile(e))
+                            .toList());
+              } else {
+                return Loading();
+              }
+            }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(

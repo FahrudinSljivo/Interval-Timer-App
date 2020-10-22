@@ -26,4 +26,16 @@ class TrainingSession {
       'breakDuration': breakDuration,
     });
   }
+
+  Future<List<DocumentSnapshot>> fetchTrainingSessions(String userId) async {
+    final QuerySnapshot qs = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('trainingSession')
+        .get();
+
+    List<DocumentSnapshot> trainingSessions = qs.docs;
+
+    return trainingSessions;
+  }
 }

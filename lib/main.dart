@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
 import 'package:interval_timer_app/view/addTrainingSession/pages/addTrainingSession.dart';
 import 'package:interval_timer_app/view/authentication/login/login.dart';
 import 'package:interval_timer_app/view/authentication/register/register.dart';
 import 'package:interval_timer_app/view/homepage/pages/homepage.dart';
 import 'package:interval_timer_app/view/splash/splash.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -17,10 +19,13 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Demo app',
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: 'Interval timer app'),
+    return ChangeNotifierProvider(
+      create: (_) => new TrainingSessionsProvider(),
+      child: MaterialApp(
+        title: 'Demo app',
+        debugShowCheckedModeBanner: false,
+        home: MyHomePage(title: 'Interval timer app'),
+      ),
     );
   }
 }

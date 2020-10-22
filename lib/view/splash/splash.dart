@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
   }
 
+/*
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -31,16 +32,16 @@ class _SplashScreenState extends State<SplashScreen>
       });
     super.didChangeDependencies();
   }
-
+*/
   @override
   dispose() {
-    _animationController.dispose();
+    //_animationController.dispose();
     super.dispose();
   }
 
-  AnimationController _animationController;
+  //AnimationController _animationController;
 
-  Animation _animation;
+  //Animation _animation;
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
                   color: Colors.black54,
                   boxShadow: [
                     BoxShadow(
-                        color: secondaryTheme,
-                        blurRadius: _animation.value,
-                        spreadRadius: _animation.value)
+                        color: secondaryTheme, blurRadius: 15, spreadRadius: 15)
                   ]),
             )),
             SizedBox(
