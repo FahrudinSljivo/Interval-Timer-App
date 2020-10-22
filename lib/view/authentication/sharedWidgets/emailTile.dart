@@ -5,6 +5,9 @@ import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
 
 class EmailTile extends StatelessWidget {
+  final TextEditingController emailController;
+
+  EmailTile(this.emailController);
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -26,16 +29,26 @@ class EmailTile extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             decoration: AuthScreensStyles().boxDecorationStyle,
-            height: 60.0,
-            child: TextField(
+            height: SizeConfig.blockSizeVertical * 7.5,
+            child: TextFormField(
+              ///simple email validation - proper could've been done using regex, but I decided it was unnecessary here
+              validator: (value) {
+                if (value.isEmpty || !value.contains('@')) {
+                  return '     Please enter valid email address';
+                }
+                return null;
+              },
+
+              controller: emailController,
+
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(
                 color: Colors.white,
-                fontFamily: 'OpenSans',
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14.0),
+                contentPadding:
+                    EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
                 prefixIcon: Icon(
                   Icons.email,
                   color: Colors.white,

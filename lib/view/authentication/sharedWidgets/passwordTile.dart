@@ -4,8 +4,13 @@ import 'package:interval_timer_app/utils/styles.dart';
 
 class PasswordTile extends StatelessWidget {
   final String labelText, hintText;
+  final TextEditingController passController, confirmPassController;
 
-  PasswordTile(this.labelText, this.hintText);
+  PasswordTile(
+      {this.labelText,
+      this.hintText,
+      this.passController,
+      this.confirmPassController = null});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -26,16 +31,29 @@ class PasswordTile extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             decoration: AuthScreensStyles().boxDecorationStyle,
-            height: 60.0,
-            child: TextField(
+            height: SizeConfig.blockSizeVertical * 7.5,
+            child: TextFormField(
+              controller: confirmPassController == null
+                  ? passController
+                  : confirmPassController,
+              validator: (value) {
+                if (value.length < 8) {
+                  return '     Please enter password at least 8 characters long';
+                }
+                if (confirmPassController == null) return null;
+                if (passController.text != value) {
+                  return '     Passwords don\'t match';
+                }
+                return null;
+              },
               obscureText: true,
               style: TextStyle(
                 color: Colors.white,
-                fontFamily: 'OpenSans',
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14.0),
+                contentPadding:
+                    EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
                 prefixIcon: Icon(
                   Icons.lock,
                   color: Colors.white,

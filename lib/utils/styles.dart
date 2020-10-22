@@ -6,13 +6,11 @@ import 'package:interval_timer_app/utils/sizeConfig.dart';
 class AuthScreensStyles {
   final hintTextStyle = TextStyle(
     color: ternaryTheme,
-    fontFamily: 'OpenSans',
   );
 
   final labelStyle = TextStyle(
     color: ternaryTheme,
     fontWeight: FontWeight.bold,
-    fontFamily: 'OpenSans',
   );
 
   final boxDecorationStyle = BoxDecoration(
@@ -33,4 +31,26 @@ class HomePageStyles {
     color: ternaryTheme,
     fontSize: SizeConfig.safeBlockHorizontal * 4,
   );
+}
+
+class NewTrainingSessionStyles {
+  inputFieldStyle({String labelText, String hintText = ""}) {
+    return InputDecoration(
+      hintText: hintText,
+      labelText: labelText,
+      labelStyle: TextStyle(
+        color: ternaryTheme,
+      ),
+      hintStyle: TextStyle(
+        color: ternaryTheme,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white, width: 2.0),
+        //borderRadius: BorderRadius.circular(25.0),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+      ),
+    );
+  }
 }
