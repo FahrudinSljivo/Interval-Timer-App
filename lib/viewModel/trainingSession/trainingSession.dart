@@ -10,10 +10,12 @@ String generateRandomString(int len) {
 }
 
 class TrainingSession {
+  final dbInstance = FirebaseFirestore.instance;
+
   Future<void> addNewTrainingSession(String title, String rounds,
       String trainingDuration, String breakDuration) async {
     String tsId = generateRandomString(20);
-    await FirebaseFirestore.instance
+    await dbInstance
         .collection('users')
         .doc(currentlySignedUser)
         .collection('trainingSessions')
@@ -28,14 +30,23 @@ class TrainingSession {
   }
 
   Future<List<DocumentSnapshot>> fetchTrainingSessions(String userId) async {
-    final QuerySnapshot qs = await FirebaseFirestore.instance
+    final QuerySnapshot qs = await dbInstance
         .collection('users')
         .doc(userId)
-        .collection('trainingSession')
+        .collection('trainingSessions')
         .get();
 
     List<DocumentSnapshot> trainingSessions = qs.docs;
 
     return trainingSessions;
+  }
+
+  Future<void> deleteTrainingSession(String userId, String id) async {
+    await dbInstance
+        .collection('users')
+        .doc(userId)
+        .collection('trainingSessions')
+        .doc(id)
+        .delete();
   }
 }

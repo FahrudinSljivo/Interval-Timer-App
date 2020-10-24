@@ -8,7 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 splashScreenRouter(BuildContext context) async {
   //WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String haha = prefs.getString("id");
+  String haha = "";
+
+  //print("DRUZIJAAAA" + prefs.getString("id"));
+  haha = prefs.getString("id");
   currentlySignedUser = prefs.getString("id");
 
   print("CURRENTLY SIGNED USER");

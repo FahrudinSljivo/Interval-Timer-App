@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<TrainingSessionModel> trainingSessionsList = [];
   final Auth _auth = Auth();
   TrainingSessionModel t = TrainingSessionModel(
     id: "1",
@@ -30,12 +31,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("DIREKT IZ SERD PRIFERENSESA");
     SharedPreferences.getInstance().then((value) {
-      print("DIREKT IZ SERD PREFERENSESA");
       print(value.getString("id"));
     });
-    print("CURRENTLY SIGNED USER");
-    print(currentlySignedUser);
 
     return Scaffold(
       appBar: AppBar(
@@ -63,16 +62,37 @@ class _HomePageState extends State<HomePage> {
             future:
                 TrainingSession().fetchTrainingSessions(currentlySignedUser),
             builder: (context, snapshot) {
-              //(snapshot.data);
-              Provider.of<TrainingSessionsProvider>(context, listen: false)
+              /*Provider.of<TrainingSessionsProvider>(context, listen: false)
                   .fetchAndSetTrainingSessions(snapshot.data);
               var trainingSessionsList =
                   Provider.of<TrainingSessionsProvider>(context, listen: false)
-                      .trainingSessions;
-              var listLength = trainingSessionsList.length;
+                      .trainingSessions;*/
               if (snapshot.hasData) {
-                return trainingSessionsList == null
-                    ? Container()
+                trainingSessionsList = snapshot.data
+                    .map(
+                      (trainingSession) => TrainingSessionModel(
+                        id: trainingSession['trainingSessionId'],
+                        title: trainingSession['title'],
+                        numberOfTrainingIntervals:
+                            int.parse(trainingSession['rounds']),
+                        trainingIntervalDuration:
+                            int.parse(trainingSession['trainingDuration']),
+                        breakIntervalDuration:
+                            int.parse(trainingSession['breakDuration']),
+                      ),
+                    )
+                    .toList()
+                    .cast<TrainingSessionModel>();
+                return snapshot.data == []
+                    ? Center(
+                        child: Text(
+                          "You have no training sessions yet. \nTry adding some!",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
                     : ListView(
                         children: trainingSessionsList
                             .map((e) => TrainingSessionTile(e))

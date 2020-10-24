@@ -13,11 +13,12 @@ class TrainingSessionsProvider with ChangeNotifier {
     _trainingSessions = list
         .map(
           (trainingSession) => TrainingSessionModel(
-            id: trainingSession['id'],
+            id: trainingSession['trainingSessionId'],
             title: trainingSession['title'],
-            numberOfTrainingIntervals: trainingSession['rounds'],
-            trainingIntervalDuration: trainingSession['trainingDuration'],
-            breakIntervalDuration: trainingSession['breakDuration'],
+            numberOfTrainingIntervals: int.parse(trainingSession['rounds']),
+            trainingIntervalDuration:
+                int.parse(trainingSession['trainingDuration']),
+            breakIntervalDuration: int.parse(trainingSession['breakDuration']),
           ),
         )
         .toList();
