@@ -22,6 +22,11 @@ class TrainingSessionsProvider with ChangeNotifier {
           ),
         )
         .toList();
+    //notifyListeners();
+  }
+
+  void removeTrainingSession(TrainingSessionModel tsm) {
+    _trainingSessions.remove(tsm);
     notifyListeners();
   }
 }

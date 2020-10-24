@@ -9,6 +9,13 @@ String generateRandomString(int len) {
   return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
 }
 
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return int.tryParse(s) != null;
+}
+
 class TrainingSession {
   final dbInstance = FirebaseFirestore.instance;
 

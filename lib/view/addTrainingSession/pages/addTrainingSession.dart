@@ -53,16 +53,19 @@ class _AddTrainingSessionState extends State<AddTrainingSession> {
                       NewSessionFormField(
                         labelText: "Enter a number of rounds: ",
                         fieldController: _roundsController,
+                        atLeast: 2,
                       ),
                       NewSessionFormField(
                         labelText:
                             "Enter a duration of training interval (in seconds): ",
                         fieldController: _trainingDuration,
+                        atLeast: 5,
                       ),
                       NewSessionFormField(
                         labelText:
                             "Enter a duration of break interval (in seconds): ",
                         fieldController: _breakDuration,
+                        atLeast: 5,
                       ),
                       SizedBox(
                         height: SizeConfig.blockSizeVertical * 3,

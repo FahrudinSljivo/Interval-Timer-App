@@ -1,18 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:interval_timer_app/models/trainingSessionModel.dart';
+import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
 import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/globals.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
 import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
+import 'package:provider/provider.dart';
 
 class TrainingSessionTile extends StatelessWidget {
   final TrainingSessionModel tsm;
+  final Function refresh;
 
-  TrainingSessionTile(this.tsm);
+  TrainingSessionTile(this.tsm, this.refresh);
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
+    final provider = Provider.of<TrainingSessionsProvider>(context);
 
     ///To make this work smoothly, I had to comment out lines 577-580 in Dismissible class itself.
     return Center(
@@ -23,10 +29,12 @@ class TrainingSessionTile extends StatelessWidget {
             top: SizeConfig.blockSizeVertical * 2),
         child: Dismissible(
           onDismissed: (direction) async {
-            TrainingSession()
+            //trainingSessionsList.remove(tsm);
+            provider.removeTrainingSession(tsm);
+            await TrainingSession()
                 .deleteTrainingSession(currentlySignedUser, tsm.id);
           },
-          key: ValueKey(tsm.id),
+          key: UniqueKey(),
           background: Container(
             child: Align(
               alignment: Alignment.centerRight,

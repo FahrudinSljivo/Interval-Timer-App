@@ -5,7 +5,6 @@ import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/globals.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/viewModel/splash/splash.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

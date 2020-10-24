@@ -4,7 +4,6 @@ import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/view/homepage/pages/homepage.dart';
 import 'package:interval_timer_app/viewModel/auth/auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SubmitButton extends StatefulWidget {
   final String submitText;

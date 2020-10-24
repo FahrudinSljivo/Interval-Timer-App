@@ -11,7 +11,6 @@ import 'package:interval_timer_app/view/sharedWidgets/deleteAlertDialog.dart';
 import 'package:interval_timer_app/viewModel/auth/auth.dart';
 import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,23 +18,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TrainingSessionModel> trainingSessionsList = [];
   final Auth _auth = Auth();
-  TrainingSessionModel t = TrainingSessionModel(
-    id: "1",
-    title: "First training session",
-    trainingIntervalDuration: 60,
-    breakIntervalDuration: 30,
-    numberOfTrainingIntervals: 5,
-  );
+
+  void refresh() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    print("DIREKT IZ SERD PRIFERENSESA");
-    SharedPreferences.getInstance().then((value) {
-      print(value.getString("id"));
-    });
-
+    final provider = Provider.of<TrainingSessionsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your training sessions'),
@@ -62,13 +53,9 @@ class _HomePageState extends State<HomePage> {
             future:
                 TrainingSession().fetchTrainingSessions(currentlySignedUser),
             builder: (context, snapshot) {
-              /*Provider.of<TrainingSessionsProvider>(context, listen: false)
-                  .fetchAndSetTrainingSessions(snapshot.data);
-              var trainingSessionsList =
-                  Provider.of<TrainingSessionsProvider>(context, listen: false)
-                      .trainingSessions;*/
               if (snapshot.hasData) {
-                trainingSessionsList = snapshot.data
+                provider.fetchAndSetTrainingSessions(snapshot.data);
+                /*trainingSessionsList = snapshot.data
                     .map(
                       (trainingSession) => TrainingSessionModel(
                         id: trainingSession['trainingSessionId'],
@@ -82,8 +69,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )
                     .toList()
-                    .cast<TrainingSessionModel>();
-                return snapshot.data == []
+                    .cast<TrainingSessionModel>();*/
+                return provider.trainingSessions.length == 0
                     ? Center(
                         child: Text(
                           "You have no training sessions yet. \nTry adding some!",
@@ -94,8 +81,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                     : ListView(
-                        children: trainingSessionsList
-                            .map((e) => TrainingSessionTile(e))
+                        children: provider.trainingSessions
+                            .map((e) => TrainingSessionTile(e, refresh))
                             .toList());
               } else {
                 return Loading();
@@ -105,12 +92,14 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          //setState(() {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AddTrainingSession(),
             ),
           );
+          //});
         },
         backgroundColor: secondaryTheme,
         child: Icon(

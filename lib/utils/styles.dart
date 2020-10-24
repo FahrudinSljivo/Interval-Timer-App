@@ -36,6 +36,9 @@ class HomePageStyles {
 class NewTrainingSessionStyles {
   inputFieldStyle({String labelText, String hintText = ""}) {
     return InputDecoration(
+      helperStyle: TextStyle(
+        color: ternaryTheme,
+      ),
       hintText: hintText,
       labelText: labelText,
       labelStyle: TextStyle(

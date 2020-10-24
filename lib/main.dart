@@ -2,17 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
-import 'package:interval_timer_app/view/addTrainingSession/pages/addTrainingSession.dart';
-import 'package:interval_timer_app/view/authentication/login/login.dart';
-import 'package:interval_timer_app/view/authentication/register/register.dart';
-import 'package:interval_timer_app/view/homepage/pages/homepage.dart';
 import 'package:interval_timer_app/view/splash/splash.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences.setMockInitialValues({});
   await Firebase.initializeApp();
   runApp(MyApp());
 }
