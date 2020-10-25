@@ -77,7 +77,7 @@ class _AddTrainingSessionState extends State<AddTrainingSession> {
                               setState(() {
                                 loading = true;
                               });
-                              TrainingSession().addNewTrainingSession(
+                              TrainingSessionViewModel().addNewTrainingSession(
                                   _titleController.text,
                                   _roundsController.text,
                                   _trainingDuration.text,

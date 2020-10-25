@@ -50,8 +50,8 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         color: primaryTheme,
         child: FutureBuilder(
-            future:
-                TrainingSession().fetchTrainingSessions(currentlySignedUser),
+            future: TrainingSessionViewModel()
+                .fetchTrainingSessions(currentlySignedUser),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 provider.fetchAndSetTrainingSessions(snapshot.data);

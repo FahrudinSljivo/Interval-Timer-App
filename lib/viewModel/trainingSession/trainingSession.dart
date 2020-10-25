@@ -16,7 +16,7 @@ bool isNumeric(String s) {
   return int.tryParse(s) != null;
 }
 
-class TrainingSession {
+class TrainingSessionViewModel {
   final dbInstance = FirebaseFirestore.instance;
 
   Future<void> addNewTrainingSession(String title, String rounds,

@@ -6,6 +6,7 @@ import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/globals.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
+import 'package:interval_timer_app/view/trainingSession/pages/trainingSession.dart';
 import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +19,6 @@ class TrainingSessionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    final provider = Provider.of<TrainingSessionsProvider>(context);
-
     ///To make this work smoothly, I had to comment out lines 577-580 in Dismissible class itself.
     return Center(
       child: Padding(
@@ -27,77 +26,54 @@ class TrainingSessionTile extends StatelessWidget {
             left: SizeConfig.blockSizeHorizontal,
             right: SizeConfig.blockSizeHorizontal,
             top: SizeConfig.blockSizeVertical * 2),
-        child: Dismissible(
-          onDismissed: (direction) async {
-            //trainingSessionsList.remove(tsm);
-            provider.removeTrainingSession(tsm);
-            await TrainingSession()
-                .deleteTrainingSession(currentlySignedUser, tsm.id);
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TrainingSession(tsm)));
           },
-          key: UniqueKey(),
-          background: Container(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding:
-                    EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 7),
-                child: Icon(Icons.delete,
-                    size: SizeConfig.safeBlockHorizontal * 7),
-              ),
-            ),
+          child: Container(
+            height: SizeConfig.blockSizeVertical * 12,
+            width: SizeConfig.blockSizeHorizontal * 95,
             decoration: BoxDecoration(
               borderRadius:
                   BorderRadius.circular(SizeConfig.safeBlockVertical * 2),
-              color: ternaryTheme,
+              color: secondaryTheme,
             ),
-          ),
-          direction: DismissDirection.endToStart,
-          child: GestureDetector(
-            onTap: () {},
-            child: Container(
-              height: SizeConfig.blockSizeVertical * 12,
-              width: SizeConfig.blockSizeHorizontal * 95,
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(SizeConfig.safeBlockVertical * 2),
-                color: secondaryTheme,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 5,
-                      top: SizeConfig.blockSizeVertical * 2,
-                    ),
-                    child: Text(
-                      tsm.title,
-                      style: HomePageStyles().tsTileTitle,
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.blockSizeHorizontal * 5,
+                    top: SizeConfig.blockSizeVertical * 2,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 5,
-                      top: SizeConfig.blockSizeVertical * 3,
-                    ),
-                    child: RichText(
-                        text: TextSpan(children: [
-                      TextSpan(text: "Rounds: "),
-                      TextSpan(
-                          text: tsm.numberOfTrainingIntervals.toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: "     Training duration: "),
-                      TextSpan(
-                          text: tsm.trainingIntervalDuration.toString() + 's',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: "     Rest duration: "),
-                      TextSpan(
-                          text: tsm.breakIntervalDuration.toString() + 's',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ])),
+                  child: Text(
+                    tsm.title,
+                    style: HomePageStyles().tsTileTitle,
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.blockSizeHorizontal * 5,
+                    top: SizeConfig.blockSizeVertical * 3,
+                  ),
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(text: "Rounds: "),
+                    TextSpan(
+                        text: tsm.numberOfTrainingIntervals.toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: "     Training duration: "),
+                    TextSpan(
+                        text: tsm.trainingIntervalDuration.toString() + 's',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: "     Rest duration: "),
+                    TextSpan(
+                        text: tsm.breakIntervalDuration.toString() + 's',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ])),
+                ),
+              ],
             ),
           ),
         ),

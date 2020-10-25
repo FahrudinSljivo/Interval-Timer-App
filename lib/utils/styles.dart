@@ -57,3 +57,13 @@ class NewTrainingSessionStyles {
     );
   }
 }
+
+class TrainingSessionStyles {
+  textStyle(int size, BuildContext context) {
+    SizeConfig().init(context);
+    return TextStyle(
+        color: ternaryTheme,
+        fontSize: SizeConfig.safeBlockHorizontal * size,
+        fontWeight: FontWeight.bold);
+  }
+}
