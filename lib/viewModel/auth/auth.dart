@@ -6,11 +6,13 @@ import 'package:interval_timer_app/utils/globals.dart';
 class Auth {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 
+  ///Simple method that maps provided arguments to a new UserModel class instance.
   UserModel _userFromFirebaseUser(
       auth.User user, String email, String password) {
     return user != null ? UserModel(user.uid, email, password) : null;
   }
 
+  ///A function that returns success if there is currently signed firebase user on this device. It's used for autologin feature.
   Future<String> currentUser() async {
     String ret = "error";
 
@@ -25,6 +27,8 @@ class Auth {
     return ret;
   }
 
+  ///Function that basically wraps firebase_auth createUserWithEmailAndPassword function that registers user in firebase db. Also, a new document is inserted into collection users with the passed credentials.
+  ///Finally id of the registered user is set in a currentlySignedUser global variable which is used in numerous places throughout the app. If the method returns an error, print it in the console.
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
       auth.UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -43,6 +47,7 @@ class Auth {
     }
   }
 
+  ///Analogous to the above function - it's just signin instead of register method and there's nothing to insert in db. If the signInWithEmailAndPassword method returns an error, print it in the console.
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       auth.UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -56,6 +61,7 @@ class Auth {
     }
   }
 
+  ///Function to sign out the currently signed user (uses firebase_auth signOut method). If the method returns an error, print it in the console.
   Future signOut() async {
     try {
       return await _auth.signOut();

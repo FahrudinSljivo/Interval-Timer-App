@@ -4,12 +4,14 @@ import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
 
+///A reusable widget (used both in login and register screens) which performs validation of email text field as well as its styling.
 class EmailTile extends StatelessWidget {
   final TextEditingController emailController;
 
   EmailTile(this.emailController);
   @override
   Widget build(BuildContext context) {
+    ///some ordinary email styling
     SizeConfig().init(context);
     return Padding(
       padding: EdgeInsets.only(
@@ -41,6 +43,7 @@ class EmailTile extends StatelessWidget {
 
               controller: emailController,
 
+              ///additional email styling
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(
                 color: Colors.white,

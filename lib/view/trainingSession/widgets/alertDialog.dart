@@ -6,6 +6,8 @@ import 'package:interval_timer_app/utils/globals.dart';
 import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
 import 'package:provider/provider.dart';
 
+///Alert dialog we show when user clicks on delete button (training session screen). If user selects yes, then training session is removed from the provider we instantiated and from the cloud firestore. Afterwards, the alert dialog is popped as well as
+///the screen itself. If user selects no, only alert dialog is popped.
 alertDialog(Function fn, BuildContext context, TrainingSessionModel tsm) {
   final provider = Provider.of<TrainingSessionsProvider>(context);
   return AlertDialog(

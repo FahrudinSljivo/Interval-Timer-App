@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/view/homepage/pages/homepage.dart';
 import 'package:interval_timer_app/viewModel/auth/auth.dart';
 
+///A submit button on login and register screens. It basically, depending on whether the user is signing in or signing up, fires different Auth methods and navigates then to home screen.
 class SubmitButton extends StatefulWidget {
   final String submitText;
   final dynamic formKey;
@@ -33,6 +33,7 @@ class _SubmitButtonState extends State<SubmitButton> {
 
   @override
   Widget build(BuildContext context) {
+    ///SizeConfig initialized so it can be used for widget styling.
     SizeConfig().init(context);
     return Padding(
       padding: EdgeInsets.only(
@@ -43,9 +44,12 @@ class _SubmitButtonState extends State<SubmitButton> {
         child: RaisedButton(
           elevation: 5.0,
           onPressed: () async {
+            ///checking if the form validation succeeds
             if (widget.formKey.currentState.validate()) {
+              ///function that fires setState of the parent widget (login/register) - displaying loader to the user because async operation has commenced
               widget.refresh(true);
 
+              ///if the user is in register screen, fire registerWithEmailAndPassword function and check for result. If it succeeds go to home page and if not, inform the user that the registration hasn't succeeded.
               if (widget.isRegistering) {
                 dynamic result = await _auth.registerWithEmailAndPassword(
                     widget.emailController.text.trim(),
@@ -62,6 +66,8 @@ class _SubmitButtonState extends State<SubmitButton> {
                     ),
                   );
                 }
+
+                ///if the user is in login screen, fire signInWithEmailAndPassword function and check for result. If it succeeds go to home page and if not, inform the user that the login hasn't succeeded.
               } else {
                 dynamic result = await _auth.signInWithEmailAndPassword(
                     widget.emailController.text.trim(),
@@ -83,6 +89,8 @@ class _SubmitButtonState extends State<SubmitButton> {
               print("Validation is not successful");
             }
           },
+
+          ///some more button styling
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),

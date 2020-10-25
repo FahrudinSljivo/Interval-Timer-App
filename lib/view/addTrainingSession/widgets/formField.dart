@@ -4,6 +4,9 @@ import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
 import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
 
+///Widget that wraps TextFormField widget. Since form fields differ in terms of validation as well as other properties, refactoring of widgets was made in order to make code a bit leaner and easier to read.
+///Basic validation is done on the input fields - fields can't be empty and nothing except numbers higher or equal to atLeast parameter can be entered.
+///Text form field styling is done in separate file and called here as a function.
 class NewSessionFormField extends StatelessWidget {
   final String labelText;
   final String hintText;

@@ -7,20 +7,23 @@ import 'package:interval_timer_app/view/authentication/sharedWidgets/emailTile.d
 import 'package:interval_timer_app/view/authentication/sharedWidgets/passwordTile.dart';
 import 'package:interval_timer_app/view/authentication/sharedWidgets/submitButton.dart';
 import 'package:interval_timer_app/view/authentication/sharedWidgets/switchButton.dart';
-import 'package:auth/auth.dart';
 
+///Screen containing new user registration form
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
+  ///Properties are GlobalKey used for form validation as well as text editing controllers which track user input in the text fields.
   final _registerFormKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
 
   bool loading = false;
+
+  ///method that's fired when validation of the fields succeeds. It's argument would be true if the validation succeeds and false if it succeeds, but the future returns an error.
   void refresh(bool loadingToTrue) {
     setState(() {
       loadingToTrue ? loading = true : loading = false;
@@ -31,6 +34,8 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      ///If the form validation succeeds, loader is rendered since the fetching of information from remote server (cloud firestore) is commencing.
+      ///Below we have simple UI which consists of 3 TextFormFields manually styled and a submit button.
       body: loading
           ? Loading()
           : Container(

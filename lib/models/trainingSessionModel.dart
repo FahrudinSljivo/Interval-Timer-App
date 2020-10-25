@@ -1,3 +1,5 @@
+///Class that defines one training session
+
 class TrainingSessionModel {
   String id;
   String title;

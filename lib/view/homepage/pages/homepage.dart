@@ -10,20 +10,19 @@ import 'package:interval_timer_app/viewModel/auth/auth.dart';
 import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
 import 'package:provider/provider.dart';
 
+///This is the page where all the training session tiles are displayed.
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  ///Instance of Auth class used for firebase user management
   final Auth _auth = Auth();
-
-  void refresh() {
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
+    ///Instance of TrainingSessionsProvider - an instance which we can use to manipulate the state.
     final provider = Provider.of<TrainingSessionsProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -31,6 +30,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: secondaryTheme,
         elevation: 0,
         actions: [
+          ///Signout button - on pressed triggers the signOut method and navigates us to login screen
           IconButton(
             icon: Icon(Icons.power_settings_new),
             onPressed: () async {
@@ -45,6 +45,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+
+      ///We have here FutureBuilder whose future fetches all the training sessions for the logged in user. In the builder method, if the future didn't finished, we display a loader. That can happen in case of an error, exception, no internet etc... In case
+      ///the snapshot has data, we store the data in the list of the TrainingSessionProvider. In case the list is empty, we display appropriate content to the user and if it's not, we map each class instance to TrainingSessionTile. Those tiles are obviously
+      ///rendered inside a ListView.
       body: Container(
         color: primaryTheme,
         child: FutureBuilder(
@@ -53,21 +57,6 @@ class _HomePageState extends State<HomePage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 provider.fetchAndSetTrainingSessions(snapshot.data);
-                /*trainingSessionsList = snapshot.data
-                    .map(
-                      (trainingSession) => TrainingSessionModel(
-                        id: trainingSession['trainingSessionId'],
-                        title: trainingSession['title'],
-                        numberOfTrainingIntervals:
-                            int.parse(trainingSession['rounds']),
-                        trainingIntervalDuration:
-                            int.parse(trainingSession['trainingDuration']),
-                        breakIntervalDuration:
-                            int.parse(trainingSession['breakDuration']),
-                      ),
-                    )
-                    .toList()
-                    .cast<TrainingSessionModel>();*/
                 return provider.trainingSessions.length == 0
                     ? Center(
                         child: Text(
@@ -80,24 +69,26 @@ class _HomePageState extends State<HomePage> {
                       )
                     : ListView(
                         children: provider.trainingSessions
-                            .map((e) => TrainingSessionTile(e, refresh))
+                            .map((e) => TrainingSessionTile(e))
                             .toList());
               } else {
                 return Loading();
               }
             }),
       ),
+
+      ///Positioning of a floating action button which is used for adding new training session.
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+      ///Floating action button which on pressed will trigger navigation to AddTrainingSession screen.
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //setState(() {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AddTrainingSession(),
             ),
           );
-          //});
         },
         backgroundColor: secondaryTheme,
         child: Icon(

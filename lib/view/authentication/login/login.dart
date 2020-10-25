@@ -8,16 +8,19 @@ import 'package:interval_timer_app/view/authentication/sharedWidgets/passwordTil
 import 'package:interval_timer_app/view/authentication/sharedWidgets/submitButton.dart';
 import 'package:interval_timer_app/view/authentication/sharedWidgets/switchButton.dart';
 
+///Screen containing signing up form
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  ///Properties are GlobalKey used for form validation as well as text editing controllers which track user input in the text fields.
   final _loginFormKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _pass = TextEditingController();
 
+  ///method that's fired when validation of the fields succeeds. It's argument would be true if the validation succeeds and false if it succeeds, but the future returns an error.
   bool loading = false;
   void refresh(bool loadingToTrue) {
     setState(() {
@@ -28,6 +31,9 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
+    ///If the form validation succeeds, loader is rendered since the fetching of information from remote server (cloud firestore) is commencing.
+    ///Below we have simple UI which consists of 2 TextFormFields manually styled and a submit button.
     return Scaffold(
       body: loading
           ? Loading()

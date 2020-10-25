@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
 
+///A reusable widget (used both in login and register screens) which performs validation of password text field as well as its styling.
 class PasswordTile extends StatelessWidget {
   final String labelText, hintText;
   final TextEditingController passController, confirmPassController;
@@ -14,7 +15,9 @@ class PasswordTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return Padding(
+      ///some ordinary password styling
       padding: EdgeInsets.only(
         left: SizeConfig.blockSizeHorizontal * 10,
         right: SizeConfig.blockSizeHorizontal * 10,
@@ -36,6 +39,8 @@ class PasswordTile extends StatelessWidget {
               controller: confirmPassController == null
                   ? passController
                   : confirmPassController,
+
+              ///simple validation is performed so that user can't enter a password shorter than 8 characters. Also if this widget is used for password confirmation, then it compares the value entered into this one with the other one.
               validator: (value) {
                 if (value.length < 8) {
                   return '     Please enter password at least 8 characters long';
@@ -46,6 +51,8 @@ class PasswordTile extends StatelessWidget {
                 }
                 return null;
               },
+
+              ///additional password styling
               obscureText: true,
               style: TextStyle(
                 color: Colors.white,

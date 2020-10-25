@@ -6,44 +6,21 @@ import 'package:interval_timer_app/utils/globals.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/viewModel/splash/splash.dart';
 
+///Screen we display at the very start. It's rendered for 3 seconds before we decide if the user is already logged in or not.
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
   }
 
-/*
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _animationController.repeat(reverse: true);
-    _animation = Tween(begin: 5.0, end: 15.0).animate(_animationController)
-      ..addListener(() {
-        setState(() {});
-      });
-    super.didChangeDependencies();
-  }
-*/
-  @override
-  dispose() {
-    //_animationController.dispose();
-    super.dispose();
-  }
-
-  //AnimationController _animationController;
-
-  //Animation _animation;
-
   @override
   Widget build(BuildContext context) {
+    ///After 3 seconds we fire a method splashScreenRouter where we check if user is logged in or not. Everything below it is simple UI rendering and no logic.
     Timer(Duration(seconds: 3), () => splashScreenRouter(context));
     SizeConfig().init(context);
     return Scaffold(

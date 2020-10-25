@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+///Class that helps us make sizes of screen, texts, icons etc. more responsive - screen height and width are calculated using media query and then 100th part of screen width and height are calculated (with and without screen paddings).
+
 class SizeConfig {
   static MediaQueryData _mediaQueryData;
   static double screenWidth;
