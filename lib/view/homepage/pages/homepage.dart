@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:interval_timer_app/models/trainingSessionModel.dart';
 import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
 import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/globals.dart';
@@ -7,9 +6,8 @@ import 'package:interval_timer_app/utils/loader.dart';
 import 'package:interval_timer_app/view/addTrainingSession/pages/addTrainingSession.dart';
 import 'package:interval_timer_app/view/authentication/login/login.dart';
 import 'package:interval_timer_app/view/homepage/widgets/trainingSessionTile.dart';
-import 'package:interval_timer_app/view/sharedWidgets/deleteAlertDialog.dart';
 import 'package:interval_timer_app/viewModel/auth/auth.dart';
-import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
+import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

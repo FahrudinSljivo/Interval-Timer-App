@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:interval_timer_app/models/trainingSessionModel.dart';
+import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
 import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/loader.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
-import 'package:interval_timer_app/utils/styles.dart';
 import 'package:interval_timer_app/view/addTrainingSession/widgets/formField.dart';
-import 'package:interval_timer_app/view/homepage/pages/homepage.dart';
-import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
+import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
+import 'package:provider/provider.dart';
 
 class AddTrainingSession extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _AddTrainingSessionState extends State<AddTrainingSession> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<TrainingSessionsProvider>(context);
     SizeConfig().init(context);
     return loading
         ? Loading()
@@ -42,7 +44,7 @@ class _AddTrainingSessionState extends State<AddTrainingSession> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: SizeConfig.blockSizeVertical * 20,
+                        height: SizeConfig.blockSizeVertical * 9,
                       ),
                       NewSessionFormField(
                         labelText: "Enter a title",
@@ -68,7 +70,7 @@ class _AddTrainingSessionState extends State<AddTrainingSession> {
                         atLeast: 5,
                       ),
                       SizedBox(
-                        height: SizeConfig.blockSizeVertical * 3,
+                        height: SizeConfig.blockSizeVertical * 2,
                       ),
                       Center(
                         child: RaisedButton(
@@ -77,17 +79,23 @@ class _AddTrainingSessionState extends State<AddTrainingSession> {
                               setState(() {
                                 loading = true;
                               });
+                              String tsId = generateRandomString(20);
+                              provider.addTrainingSession(TrainingSessionModel(
+                                  id: tsId,
+                                  title: _titleController.text,
+                                  numberOfTrainingIntervals:
+                                      int.parse(_roundsController.text),
+                                  trainingIntervalDuration:
+                                      int.parse(_trainingDuration.text),
+                                  breakIntervalDuration:
+                                      int.parse(_breakDuration.text)));
                               TrainingSessionViewModel().addNewTrainingSession(
+                                  tsId,
                                   _titleController.text,
                                   _roundsController.text,
                                   _trainingDuration.text,
                                   _breakDuration.text);
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(),
-                                ),
-                              );
+                              Navigator.pop(context);
                             }
                           },
                           child: Text("Add training session"),

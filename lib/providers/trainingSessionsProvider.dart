@@ -25,6 +25,11 @@ class TrainingSessionsProvider with ChangeNotifier {
     //notifyListeners();
   }
 
+  void addTrainingSession(TrainingSessionModel tsm) {
+    _trainingSessions.add(tsm);
+    notifyListeners();
+  }
+
   void removeTrainingSession(TrainingSessionModel tsm) {
     _trainingSessions.remove(tsm);
     notifyListeners();

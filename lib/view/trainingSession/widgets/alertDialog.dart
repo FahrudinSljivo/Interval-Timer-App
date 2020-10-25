@@ -3,7 +3,7 @@ import 'package:interval_timer_app/models/trainingSessionModel.dart';
 import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
 import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/globals.dart';
-import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
+import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
 import 'package:provider/provider.dart';
 
 alertDialog(Function fn, BuildContext context, TrainingSessionModel tsm) {

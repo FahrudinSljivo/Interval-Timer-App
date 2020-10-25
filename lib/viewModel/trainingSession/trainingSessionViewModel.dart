@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:interval_timer_app/utils/globals.dart';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 String generateRandomString(int len) {
   var r = Random();
@@ -16,12 +17,18 @@ bool isNumeric(String s) {
   return int.tryParse(s) != null;
 }
 
+Future<String> fetchTheQuote() async {
+  String url = 'https://pastebin.com/raw/jmhKjPLD';
+  final response = await http.get(url);
+
+  return response.body;
+}
+
 class TrainingSessionViewModel {
   final dbInstance = FirebaseFirestore.instance;
 
-  Future<void> addNewTrainingSession(String title, String rounds,
+  Future<void> addNewTrainingSession(String tsId, String title, String rounds,
       String trainingDuration, String breakDuration) async {
-    String tsId = generateRandomString(20);
     await dbInstance
         .collection('users')
         .doc(currentlySignedUser)

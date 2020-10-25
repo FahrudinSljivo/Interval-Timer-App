@@ -42,7 +42,7 @@ class _RegisterState extends State<Register> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: SizeConfig.blockSizeVertical * 15,
+                        height: SizeConfig.blockSizeVertical * 10,
                       ),
                       Center(
                         child: Text(

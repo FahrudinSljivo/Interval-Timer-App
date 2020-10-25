@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interval_timer_app/utils/colors.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
-import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
+import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
 
 class NewSessionFormField extends StatelessWidget {
   final String labelText;

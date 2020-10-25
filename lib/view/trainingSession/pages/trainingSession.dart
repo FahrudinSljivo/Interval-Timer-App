@@ -2,17 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:interval_timer_app/models/trainingSessionModel.dart';
-import 'package:interval_timer_app/providers/trainingSessionsProvider.dart';
 import 'package:interval_timer_app/utils/colors.dart';
-import 'package:interval_timer_app/utils/globals.dart';
 import 'package:interval_timer_app/utils/loader.dart';
 import 'package:interval_timer_app/utils/sizeConfig.dart';
 import 'package:interval_timer_app/utils/styles.dart';
-import 'package:interval_timer_app/view/homepage/pages/homepage.dart';
 import 'package:interval_timer_app/view/trainingSession/widgets/alertDialog.dart';
-import 'package:interval_timer_app/viewModel/trainingSession/dataFetching.dart';
-import 'package:interval_timer_app/viewModel/trainingSession/trainingSession.dart';
-import 'package:provider/provider.dart';
+import 'package:interval_timer_app/viewModel/trainingSession/trainingSessionViewModel.dart';
 
 class TrainingSession extends StatefulWidget {
   final TrainingSessionModel tsm;
@@ -84,6 +79,7 @@ class _TrainingSessionState extends State<TrainingSession> {
   void _resetTimer() {
     setState(() {
       timeTicking = false;
+      ended = false;
       trainingTime = true;
       currentRound = 1;
       currentSeconds = initTrainingIntervalSeconds;
@@ -226,7 +222,7 @@ class _TrainingSessionState extends State<TrainingSession> {
                           color: ternaryTheme,
                           size: SizeConfig.safeBlockHorizontal * 15,
                         ),
-                        onTap: timeTicking ? null : _startTimer,
+                        onTap: ended ? null : timeTicking ? null : _startTimer,
                       ),
                       SizedBox(
                         width: SizeConfig.blockSizeHorizontal * 15,
@@ -237,7 +233,7 @@ class _TrainingSessionState extends State<TrainingSession> {
                           color: ternaryTheme,
                           size: SizeConfig.safeBlockHorizontal * 15,
                         ),
-                        onTap: timeTicking ? _pauseTimer : null,
+                        onTap: ended ? null : timeTicking ? _pauseTimer : null,
                       ),
                       SizedBox(
                         width: SizeConfig.blockSizeHorizontal * 15,
@@ -249,14 +245,10 @@ class _TrainingSessionState extends State<TrainingSession> {
                           size: SizeConfig.safeBlockHorizontal * 15,
                         ),
                         onTap: () {
-                          ended = false;
                           _stopTimer();
                         },
                       ),
                     ],
-                  ),
-                  SizedBox(
-                    height: SizeConfig.blockSizeVertical * 10,
                   ),
                 ],
               ),
